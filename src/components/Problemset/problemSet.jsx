@@ -38,7 +38,9 @@ const ProblemSet = () => {
                   <div className="w-full pl-2">
                     <div className="max-w-max">
                       <Link
-                        to={`/problems/${problem.name.split(" ").join("-")}`}
+                        to={`/problems/${index}/${problem.name
+                          .split(" ")
+                          .join("-")}`}
                         className="w-full"
                       >
                         <div className="w-full hover:link hover:text-blue-600 font-semibold">
@@ -89,7 +91,9 @@ const ProblemSet = () => {
                   <div className="w-full pl-2">
                     <div className="max-w-max">
                       <Link
-                        to={`/problems/${problem.name.split(" ").join("-")}`}
+                        to={`/problems/${index}/${problem.name
+                          .split(" ")
+                          .join("-")}`}
                         className="w-full"
                       >
                         <div className="w-full hover:link hover:text-blue-600 font-semibold">

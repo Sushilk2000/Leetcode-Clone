@@ -1,5 +1,12 @@
+import { useState } from "react";
 import { AiOutlineFullscreen, AiOutlineSetting } from "react-icons/ai";
-function PreferanceNav() {
+import { RxReset } from "react-icons/rx";
+
+function PreferanceNav({ Problem, setInputCode }) {
+  function handleReset() {
+    localStorage.setItem(Problem.id, Problem.starterCode);
+    setInputCode(Problem.starterCode); // Toggle the forceUpdate state
+  }
   return (
     <div className="flex items-center justify-between rounded h-11 w-full">
       <div className="flex items-center text-white">
@@ -13,6 +20,13 @@ function PreferanceNav() {
       </div>
 
       <div className="flex items-center m-2">
+        <button className="preferenceBtn group" onClick={handleReset}>
+          <div className="h-4 w-4 text-black font-bold text-lg">
+            <RxReset />
+          </div>
+          <div className="preferenceBtn-tooltip">Reset</div>
+        </button>
+
         <button className="preferenceBtn group">
           <div className="h-4 w-4 text-black font-bold text-lg">
             <AiOutlineSetting />

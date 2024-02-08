@@ -4,9 +4,28 @@ import { auth } from "../../firebase";
 import { IoIosLogOut } from "react-icons/io";
 import { useAuth } from "../../context/AuthProvider";
 import { RxAvatar } from "react-icons/rx";
+import { Problems } from "../../Problems/index";
 import { BsList } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useNavigate, useLocation } from "react-router-dom";
 function Header({ problempage }) {
+  const data = useLocation().pathname.split("/");
+  let index = data[data.length - 2];
+  const nav = useNavigate();
+  function handlechanegleft() {
+    if (index == 0) {
+      index = Problems.length;
+    }
+    index = index - 1;
+    nav(`/problems/${index}/${Problems[index].name.id}`);
+  }
+  function handlechanegright() {
+    if (index == 4) {
+      index = -1;
+    }
+    ++index;
+    nav(`/problems/${index}/${Problems[index].name.id}`);
+  }
   const [user] = useAuthState(auth);
   const authCtx = useAuth();
   const handleLogout = async () => {
@@ -32,7 +51,10 @@ function Header({ problempage }) {
         </div>
         {problempage && (
           <div className="flex items-center gap-2 flex-1 justify-center">
-            <div className="flex items-center justify-center rounded bg-gray-700 text-white h-8 w-8 cursor-pointer">
+            <div
+              className="flex items-center justify-center rounded bg-gray-700 text-white h-8 w-8 cursor-pointer"
+              onClick={handlechanegleft}
+            >
               <FaChevronLeft />
             </div>
             <Link
@@ -44,7 +66,10 @@ function Header({ problempage }) {
               </div>
               <p>ProblemList</p>
             </Link>
-            <div className="flex items-center justify-center  bg-gray-700 text-white rounded h-8 w-8 cursor-pointer">
+            <div
+              className="flex items-center justify-center  bg-gray-700 text-white rounded h-8 w-8 cursor-pointer"
+              onClick={handlechanegright}
+            >
               <FaChevronRight />
             </div>
           </div>

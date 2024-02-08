@@ -39,7 +39,7 @@ function SignUp() {
         </div>
         <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit}>
           <h3 className="text-white font-bold text-2xl text-center">
-            Sign In to Leetcode
+            Sign Up to Leetcode
           </h3>
           <div className="flex flex-col">
             <label
@@ -49,6 +49,7 @@ function SignUp() {
               Your Email:
             </label>
             <input
+              onChange={handleemailchange}
               type="email"
               name="email"
               id="email"

@@ -1,23 +1,36 @@
 import Split from "react-split";
 import PreferanceNav from "./preferanceNav/PreferenceNav";
 import CodeMirror from "@uiw/react-codemirror";
-import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { bbedit, bbeditInit } from "@uiw/codemirror-theme-bbedit";
 import { javascript } from "@codemirror/lang-javascript";
 import EditorFooter from "./editorfooter";
-function CodeEditor() {
+import { useRef, useState, useEffect } from "react";
+
+function CodeEditor({ Problem }) {
+  const [caseNumber, setCaseNumber] = useState(1);
+  const [inputCode, setInputCode] = useState(Problem.starterCode);
+  function handleOnChange(newValue) {
+    localStorage.setItem(Problem.id, newValue);
+  }
+
   return (
     <div className="min-w-0 mb-2 bg-white m-2 ml-0.5 rounded-md">
-      <PreferanceNav />
+      <PreferanceNav Problem={Problem} setInputCode={setInputCode} />
       <Split
         className="splitver h-[calc(100vh-160px)]"
         direction="vertical"
-        sizes={[60, 40]}
+        sizes={[55, 45]}
         minSize={60}
       >
         <div className="w-full overflow-auto">
           <CodeMirror
-            value="const a = 1"
-            theme={vscodeDark}
+            value={
+              localStorage.getItem(Problem.id) != null
+                ? localStorage.getItem(Problem.id)
+                : inputCode.current
+            }
+            onChange={handleOnChange} // Update localStorage on change
+            theme={bbedit}
             extensions={[javascript()]}
             style={{ fontSize: 16 }}
           />
@@ -30,36 +43,29 @@ function CodeEditor() {
             </div>
           </div>
           <div className="flex">
-            <div className="mr-2 items-start mt-2 text-black">
-              <div className="flex flex-wrap items-center gap-y-4">
-                <div className="font-medium items-center transition-all focus:outline-none inline-flex bg-gray-200 hover:bg-gray-300 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap">
-                  Case 1
+            {Problem.examples.map((item) => (
+              <div className="mr-2 items-start mt-2 text-black" key={item.id}>
+                <div className="flex flex-wrap items-center gap-y-4">
+                  <div
+                    onClick={() => {
+                      setCaseNumber(item.id);
+                    }}
+                    className="font-medium items-center transition-all focus:outline-none inline-flex bg-gray-200 hover:bg-gray-300 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap"
+                  >
+                    Case {item.id}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="mr-2 items-start mt-2 text-black">
-              <div className="flex flex-wrap items-center gap-y-4">
-                <div className="font-medium items-center transition-all focus:outline-none inline-flex bg-gray-200 hover:bg-gray-300 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap">
-                  Case 2
-                </div>
-              </div>
-            </div>
-            <div className="mr-2 items-start mt-2 text-black">
-              <div className="flex flex-wrap items-center gap-y-4">
-                <div className="font-medium items-center transition-all focus:outline-none inline-flex bg-gray-200 hover:bg-gray-300 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap">
-                  Case 3
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
           <div className="font-semibold my-4">
-            <p className="text-sm font-medium mt-4">Input:</p>
+            <p className="text-sm font-medium mt-1">Input:</p>
             <div className="w-full cursor-text rounded-lg border px-3 py-[10px]  bg-gray-200 border-transparent mt-2">
-              nums: [2,7,11,15], target:9
+              {Problem.examples[caseNumber - 1].inputText}
             </div>
-            <p className="text-sm font-medium mt-4">Output:</p>
+            <p className="text-sm font-medium mt-1 ">Output:</p>
             <div className="w-full cursor-text rounded-lg border px-3 py-[10px]  bg-gray-200 border-transparent mt-2">
-              [0,1]
+              {Problem.examples[caseNumber - 1].outputText}
             </div>
           </div>
         </div>

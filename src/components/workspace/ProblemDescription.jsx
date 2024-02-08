@@ -1,7 +1,9 @@
 import { BsCheck2Circle } from "react-icons/bs";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { TiStarOutline } from "react-icons/ti";
-function ProblemDescription() {
+import { Problems } from "../../Problems";
+import { useLocation } from "react-router-dom";
+function ProblemDescription({ Problem }) {
   return (
     <div className="text-black rounded-lg m-2 mr-0 bg-white bg-opacity-100 border">
       {/* TAB */}
@@ -17,7 +19,7 @@ function ProblemDescription() {
           <div className="w-full">
             <div className="flex space-x-4">
               <div className="flex-1 mr-2 text-lg text-black font-medium">
-                1. Two Sum
+                {Problem?.title}
               </div>
             </div>
             <div className="flex items-center mt-3">
@@ -43,84 +45,38 @@ function ProblemDescription() {
             </div>
 
             {/* Problem Statement(paragraphs) */}
-            <div className="text-black text-sm">
-              <p className="mt-3">
-                Given an array of integers <code>nums</code> and an integer{" "}
-                <code>target</code>, return
-                <em>
-                  indices of the two numbers such that they add up to
-                </em>{" "}
-                <code>target</code>.
-              </p>
-              <p className="mt-3">
-                You may assume that each input would have{" "}
-                <strong>exactly one solution</strong>, and you may not use
-                thesame element twice.
-              </p>
-              <p className="mt-3">You can return the answer in any order.</p>
-            </div>
+            <div
+              className="text-black text-sm"
+              dangerouslySetInnerHTML={{ __html: Problem?.problemStatement }}
+            ></div>
 
             {/* Examples */}
             <div className="mt-4">
               {/* Example 1 */}
-              <div>
-                <p className="font-medium text-black">Example 1: </p>
-                <div className="example-card">
-                  <pre>
-                    <strong className="text-black">Input: </strong> nums =
-                    [2,7,11,15], target = 9 <br />
-                    <strong>Output:</strong> [0,1] <br />
-                    <strong>Explanation:</strong>Because nums[0] + nums[1] == 9,
-                    we return [0, 1].
-                  </pre>
-                </div>
-              </div>
 
-              {/* Example 2 */}
-              <div>
-                <p className="font-medium text-black ">Example 2: </p>
-                <div className="example-card">
-                  <pre>
-                    <strong className="text-black">Input: </strong> nums =
-                    [3,2,4], target = 6 <br />
-                    <strong>Output:</strong> [1,2] <br />
-                    <strong>Explanation:</strong>Because nums[1] + nums[2] == 6,
-                    we return [1, 2].
-                  </pre>
+              {Problem.examples.map((item) => (
+                <div key={item.id}>
+                  <p className="font-medium text-black">Example {item.id}:</p>
+                  <div className="example-card">
+                    <pre>
+                      <strong className="text-black">Input: </strong>
+                      {item.inputText} <br />
+                      <strong>Output:</strong> {item.outputText} <br />
+                      <strong>Explanation:</strong>
+                      {item.explanation}
+                    </pre>
+                  </div>
                 </div>
-              </div>
-              {/* Example 3 */}
-              <div>
-                <p className="font-medium text-black ">Example 3: </p>
-                <div className="example-card">
-                  <pre>
-                    <strong className="text-black">Input: </strong> nums =
-                    [3,3], target = 6
-                    <br />
-                    <strong>Output:</strong> [0,1] <br />
-                  </pre>
-                </div>
-              </div>
+              ))}
             </div>
 
             {/* Constraints */}
             <div className="my-5">
               <div className="text-black text-sm font-medium">Constraints:</div>
-              <ul className="text-black ml-5 list-disc">
-                <li className="mt-2">
-                  <code>2 ≤ nums.length ≤ 10</code>
-                </li>
-
-                <li className="mt-2">
-                  <code>-10 ≤ nums[i] ≤ 10</code>
-                </li>
-                <li className="mt-2">
-                  <code>-10 ≤ target ≤ 10</code>
-                </li>
-                <li className="mt-2 text-sm">
-                  <strong>Only one valid answer exists.</strong>
-                </li>
-              </ul>
+              <ul
+                className="text-black ml-5 list-disc"
+                dangerouslySetInnerHTML={{ __html: Problem.constraints }}
+              ></ul>
             </div>
           </div>
         </div>

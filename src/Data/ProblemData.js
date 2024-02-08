@@ -6,33 +6,27 @@ export const data = [
     acceptance: "70%",
   },
   {
-    name: "two sum 2",
+    name: "Jump Game",
     solution: "jell2",
     difficulty: "Easy",
     acceptance: "70%",
   },
   {
-    name: "two sum 3",
+    name: "Reverse Linked List",
     solution: "jell3",
     difficulty: "Hard",
     acceptance: "70%",
   },
   {
-    name: "two sum 4",
+    name: "Search a 2D matrix",
     solution: "jell4",
     difficulty: "Medium",
     acceptance: "70%",
   },
   {
-    name: "two sum 5",
+    name: "Valid parentheses",
     solution: "jell5",
     difficulty: "Hard",
-    acceptance: "70%",
-  },
-  {
-    name: "two sum 6",
-    solution: "jell6",
-    difficulty: "Easy",
     acceptance: "70%",
   },
 ];
