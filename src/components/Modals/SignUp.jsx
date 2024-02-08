@@ -10,6 +10,7 @@ function SignUp() {
   const [error, setError] = useState("");
   const [laoding, setLoding] = useState(false);
   const nav = useNavigate();
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (passRef.current.value !== confrimPassRef.current.value) {
@@ -49,12 +50,11 @@ function SignUp() {
               Your Email:
             </label>
             <input
-              onChange={handleemailchange}
+              ref={emailRef}
               type="email"
               name="email"
               id="email"
               required
-              ref={emailRef}
               className="border border-white h-8 rounded-md px-2 py-2 hover:bg-black text-black hover:text-white placeholder:text-gray-500 placeholder:font-semibold"
               placeholder="example@email.com"
             />
