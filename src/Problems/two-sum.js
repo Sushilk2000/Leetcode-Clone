@@ -1,6 +1,4 @@
-// Do not include: const assert = require("assert");
-
-export const handlerTwoSum = (fn) => {
+export const handlerTwoSum = (fnString) => {
   try {
     const nums = [
       [2, 7, 11, 15],
@@ -15,14 +13,21 @@ export const handlerTwoSum = (fn) => {
       [0, 1],
     ];
 
+    const fn = new Function(`return ${fnString}`)();
+
     for (let i = 0; i < nums.length; i++) {
       const result = fn(nums[i], targets[i]);
-      assert.deepStrictEqual(result, answers[i]);
+      console.log("result:", result);
+      console.log("answer:", answers[i]);
+      if (!arraysEqual(result, answers[i])) {
+        throw new Error(
+          `Assertion failed: Expected ${result} to equal ${answers[i]}`
+        );
+      }
     }
     return true;
   } catch (error) {
-    console.error("twoSum handler function error");
-    throw new Error(error);
+    console.log(error);
   }
 };
 
@@ -39,7 +44,7 @@ const twoSum = {
   </p>
   <p class='mt-3'>
     You may assume that each input would have <strong>exactly one solution</strong>, and you
-    may not use thesame element twice.
+    may not use the same element twice.
   </p>
   <p class='mt-3'>You can return the answer in any order.</p>`,
   examples: [
@@ -77,3 +82,21 @@ const twoSum = {
   starterFunctionName: "function twoSum(",
 };
 export default twoSum;
+
+function arraysEqual(arr1, arr2) {
+  if (
+    !Array.isArray(arr1) ||
+    !Array.isArray(arr2) ||
+    arr1.length !== arr2.length
+  ) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}

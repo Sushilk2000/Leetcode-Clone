@@ -23,8 +23,13 @@ export const search2DMatrixHandler = (fn) => {
     const answers = [true, false];
     for (let i = 0; i < tests.length; i++) {
       const result = fn(tests[i].matrix, tests[i].target);
-      assert.deepEqual(result, answers[i]);
+      if (!isEqual(result, answers[i])) {
+        throw new Error(
+          `Assertion failed for test ${i}: Expected ${result} to equal ${answers[i]}`
+        );
+      }
     }
+
     return true;
   } catch (error) {
     console.error("Error from search2DMatrixHandler: ", error);
@@ -32,6 +37,11 @@ export const search2DMatrixHandler = (fn) => {
   }
 };
 
+function isEqual(obj1, obj2) {
+  // Implement your custom equality comparison logic here
+  // This is just a basic example, adjust as needed for your specific use case
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+}
 const starterCodeSearch2DMatrixJS = `// Do not edit function name
 function searchMatrix(matrix, target) {
   // Write your code here

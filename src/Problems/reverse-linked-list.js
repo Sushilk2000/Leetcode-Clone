@@ -24,7 +24,22 @@ export const reverseLinkedListHandler = (fn) => {
     for (let i = 0; i < tests.length; i++) {
       const list = createLinkedList(tests[i]);
       const result = fn(list);
-      assert.deepEqual(getListValues(result), answers[i]);
+
+      // Custom assertion using deep equality check
+      if (!areArraysEqual(getListValues(result), answers[i])) {
+        throw new Error(
+          `Assertion failed for test ${i}: Expected ${getListValues(
+            result
+          )} to equal ${answers[i]}`
+        );
+      }
+
+      // Custom assertion using strict equality check
+      if (!areArraysEqualStrict(result, answers[i])) {
+        throw new Error(
+          `Assertion failed for test ${i}: Expected ${result} to equal ${answers[i]}`
+        );
+      }
     }
     return true;
   } catch (error) {
@@ -32,6 +47,22 @@ export const reverseLinkedListHandler = (fn) => {
     throw new Error(error);
   }
 };
+
+function areArraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function areArraysEqualStrict(arr1, arr2) {
+  return JSON.stringify(arr1) === JSON.stringify(arr2);
+}
 
 export function createLinkedList(values) {
   const head = new LinkedList(values[0]);

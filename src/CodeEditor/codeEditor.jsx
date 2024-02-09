@@ -5,14 +5,31 @@ import { bbedit, bbeditInit } from "@uiw/codemirror-theme-bbedit";
 import { javascript } from "@codemirror/lang-javascript";
 import EditorFooter from "./editorfooter";
 import { useRef, useState, useEffect } from "react";
-
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 function CodeEditor({ Problem }) {
+  const [user] = useAuthState(auth);
   const [caseNumber, setCaseNumber] = useState(1);
   const [inputCode, setInputCode] = useState(Problem.starterCode);
   function handleOnChange(newValue) {
     localStorage.setItem(Problem.id, newValue);
   }
-
+  const handleSubmit = async () => {
+    if (!user) {
+      alert("Please login to submit your code");
+      return;
+    }
+    try {
+      const result = Problem.handlerFunction(inputCode);
+      if (result) {
+        alert("Congratulations! All tests passed");
+      } else {
+        alert("Wrong answer");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="min-w-0 mb-2 bg-white m-2 ml-0.5 rounded-md">
       <PreferanceNav Problem={Problem} setInputCode={setInputCode} />
@@ -70,7 +87,7 @@ function CodeEditor({ Problem }) {
           </div>
         </div>
       </Split>
-      <EditorFooter />
+      <EditorFooter handleSubmit={handleSubmit} />
     </div>
   );
 }
