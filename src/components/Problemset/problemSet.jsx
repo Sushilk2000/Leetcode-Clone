@@ -6,12 +6,19 @@ import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import Youtube from "react-youtube";
+import { Tuple } from "@reduxjs/toolkit";
 
 const ProblemSet = () => {
   const [youtubePlayer, setYoutubePlayer] = useState({
     isOpen: false,
     videoId: "",
   });
+  function handleYoutube(e) {
+    setYoutubePlayer({
+      isOpen: true,
+      videoId: e,
+    });
+  }
   const [myData, setMyData] = useState(data);
   return (
     <>
@@ -24,8 +31,8 @@ const ProblemSet = () => {
           <div className="w-full flex px-4 text-xl font-bold">
             <div className="w-2/5">STATUS</div>
             <div className="w-full">NAME</div>
-            <div className="w-2/5">ACCEPTANCE</div>
             <div className="w-2/5">DIFFICULTY</div>
+            <div className="w-2/5">ACCEPTANCE</div>
             <div className="w-2/5">SOLUTION</div>
           </div>
           {myData.map((problem, index) => (
@@ -33,18 +40,24 @@ const ProblemSet = () => {
               {index % 2 == 1 ? (
                 <div className="bg-gray-300 py-2 w-full flex h-full">
                   <div className="w-2/5 font-semibold pl-2">
-                    <BsCheckCircle color="blue" fontSize={"18"} width={"18"} />
+                    {localStorage.getItem(`status_${problem.id}`) == "yes" ? (
+                      <BsCheckCircle
+                        color="blue"
+                        fontSize={"18"}
+                        width={"18"}
+                      />
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="w-full pl-2">
                     <div className="max-w-max">
                       <Link
-                        to={`/problems/${index}/${problem.name
-                          .split(" ")
-                          .join("-")}`}
+                        to={`/problems/${index}/${problem.id}`}
                         className="w-full"
                       >
                         <div className="w-full hover:link hover:text-blue-600 font-semibold">
-                          {problem.name}
+                          {problem.title}
                         </div>
                       </Link>
                     </div>
@@ -68,15 +81,18 @@ const ProblemSet = () => {
                     )}
                   </div>
                   <div className="w-2/5 pl-2 font-semibold">
-                    {problem.acceptance}
+                    {problem.category}
                   </div>
                   <div className="w-2/5 font-semibold pl-2">
-                    {problem.vidId ? (
+                    {problem.videoId ? (
                       <p>
                         {
                           <AiFillYoutube
                             size={28}
                             className="hover:text-red-600 cursor-pointer"
+                            onClick={() => {
+                              handleYoutube(problem.videoId);
+                            }}
                           />
                         }
                       </p>
@@ -87,17 +103,25 @@ const ProblemSet = () => {
                 </div>
               ) : (
                 <div className="w-full flex h-full py-2">
-                  <div className="w-2/5 font-semibold pl-2">Status</div>
+                  <div className="w-2/5 font-semibold pl-2">
+                    {localStorage.getItem(`status_${problem.id}`) == "yes" ? (
+                      <BsCheckCircle
+                        color="blue"
+                        fontSize={"18"}
+                        width={"18"}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
                   <div className="w-full pl-2">
                     <div className="max-w-max">
                       <Link
-                        to={`/problems/${index}/${problem.name
-                          .split(" ")
-                          .join("-")}`}
+                        to={`/problems/${index}/${problem.id}`}
                         className="w-full"
                       >
                         <div className="w-full hover:link hover:text-blue-600 font-semibold">
-                          {problem.name}
+                          {problem.title}
                         </div>
                       </Link>
                     </div>
@@ -120,20 +144,17 @@ const ProblemSet = () => {
                     )}
                   </div>
                   <div className="w-2/5 pl-2 font-semibold">
-                    {problem.acceptance}
+                    {problem.category}
                   </div>
                   <div className="w-2/5 font-semibold pl-2">
-                    {problem.solution ? (
+                    {problem.videoId ? (
                       <p>
                         {
                           <AiFillYoutube
-                            className="hover:text-red-600 cursor-pointer"
                             size={28}
+                            className="hover:text-red-600 cursor-pointer"
                             onClick={() => {
-                              setYoutubePlayer({
-                                isOpen: true,
-                                videoId: "xty7fr-k0TU",
-                              });
+                              handleYoutube(problem.videoId);
                             }}
                           />
                         }

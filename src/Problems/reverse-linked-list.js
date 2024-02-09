@@ -31,7 +31,7 @@ export const reverseLinkedListHandler = (fn) => {
     }
     return true;
   } catch (error) {
-    console.log("Error from reverseLinkedListHandler: ", error);
+    alert(error);
     throw new Error(error);
   }
 };

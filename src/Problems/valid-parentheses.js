@@ -10,7 +10,7 @@ export const validParenthesesHandler = (fn) => {
     }
     return true;
   } catch (error) {
-    console.error("Error from validParenthesesHandler: ", error);
+    alert(error);
     throw new Error(error);
   }
 };

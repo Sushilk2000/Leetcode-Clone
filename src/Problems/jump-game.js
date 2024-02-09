@@ -17,7 +17,7 @@ export const jumpGameHandler = (fn) => {
     }
     return true;
   } catch (error) {
-    console.log("Error from jumpGameHandler: ", error);
+    alert(error);
     throw new Error(error);
   }
 };

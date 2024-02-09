@@ -25,6 +25,7 @@ function CodeEditor({ Problem }) {
       // const result = Problem.handlerFunction(cb);
       if (result) {
         alert("Congratulations! All tests passed");
+        localStorage.setItem(`status_${Problem.id}`, "yes");
       } else {
         alert("Wrong answer");
       }
