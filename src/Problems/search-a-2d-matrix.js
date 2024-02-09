@@ -1,5 +1,3 @@
-// Do not include: const assert = require("assert");
-
 export const search2DMatrixHandler = (fn) => {
   try {
     const tests = [
@@ -23,25 +21,17 @@ export const search2DMatrixHandler = (fn) => {
     const answers = [true, false];
     for (let i = 0; i < tests.length; i++) {
       const result = fn(tests[i].matrix, tests[i].target);
-      if (!isEqual(result, answers[i])) {
-        throw new Error(
-          `Assertion failed for test ${i}: Expected ${result} to equal ${answers[i]}`
-        );
+      if (result !== answers[i]) {
+        throw new Error(`Test case ${i} failed.`);
       }
     }
-
     return true;
   } catch (error) {
-    console.error("Error from search2DMatrixHandler: ", error);
+    console.log("Error from searchA2DMatrixHandler: ", error);
     throw new Error(error);
   }
 };
 
-function isEqual(obj1, obj2) {
-  // Implement your custom equality comparison logic here
-  // This is just a basic example, adjust as needed for your specific use case
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
-}
 const starterCodeSearch2DMatrixJS = `// Do not edit function name
 function searchMatrix(matrix, target) {
   // Write your code here
@@ -94,5 +84,4 @@ const search2DMatrix = {
   starterFunctionName: "function searchMatrix",
   order: 5,
 };
-
 export default search2DMatrix;

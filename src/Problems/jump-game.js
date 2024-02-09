@@ -11,13 +11,13 @@ export const jumpGameHandler = (fn) => {
       const result = fn(tests[i]);
       if (result !== answers[i]) {
         throw new Error(
-          `Test failed for input "${tests[i]}". Expected ${answers[i]}, but got ${result}.`
+          `Test case ${i} failed. Expected: ${answers[i]}, got: ${result}`
         );
       }
     }
     return true;
   } catch (error) {
-    console.error("Error from jumpGameHandler: ", error);
+    console.log("Error from jumpGameHandler: ", error);
     throw new Error(error);
   }
 };

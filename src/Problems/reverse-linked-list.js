@@ -1,3 +1,4 @@
+// JS doesn't have a built in LinkedList class, so we'll create one
 class LinkedList {
   constructor(value) {
     this.value = value;
@@ -24,29 +25,39 @@ export const reverseLinkedListHandler = (fn) => {
     for (let i = 0; i < tests.length; i++) {
       const list = createLinkedList(tests[i]);
       const result = fn(list);
-
-      // Custom assertion using deep equality check
       if (!areArraysEqual(getListValues(result), answers[i])) {
-        throw new Error(
-          `Assertion failed for test ${i}: Expected ${getListValues(
-            result
-          )} to equal ${answers[i]}`
-        );
-      }
-
-      // Custom assertion using strict equality check
-      if (!areArraysEqualStrict(result, answers[i])) {
-        throw new Error(
-          `Assertion failed for test ${i}: Expected ${result} to equal ${answers[i]}`
-        );
+        throw new Error(`Test case ${i} failed.`);
       }
     }
     return true;
   } catch (error) {
-    console.error("Error from reverseLinkedListHandler: ", error);
+    console.log("Error from reverseLinkedListHandler: ", error);
     throw new Error(error);
   }
 };
+
+// it creates a linked list from an array
+function createLinkedList(values) {
+  const head = new LinkedList(values[0]);
+  let current = head;
+  for (let i = 1; i < values.length; i++) {
+    const node = new LinkedList(values[i]);
+    current.next = node;
+    current = node;
+  }
+  return head;
+}
+
+// it returns an array of values from a linked list
+function getListValues(head) {
+  const values = [];
+  let current = head;
+  while (current !== null) {
+    values.push(current.value);
+    current = current.next;
+  }
+  return values;
+}
 
 function areArraysEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
@@ -60,32 +71,7 @@ function areArraysEqual(arr1, arr2) {
   return true;
 }
 
-function areArraysEqualStrict(arr1, arr2) {
-  return JSON.stringify(arr1) === JSON.stringify(arr2);
-}
-
-export function createLinkedList(values) {
-  const head = new LinkedList(values[0]);
-  let current = head;
-  for (let i = 1; i < values.length; i++) {
-    const node = new LinkedList(values[i]);
-    current.next = node;
-    current = node;
-  }
-  return head;
-}
-
-export function getListValues(head) {
-  const values = [];
-  let current = head;
-  while (current !== null) {
-    values.push(current.value);
-    current = current.next;
-  }
-  return values;
-}
-
-export const starterCodeReverseLinkedListJS = `
+const starterCodeReverseLinkedListJS = `
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -93,11 +79,12 @@ export const starterCodeReverseLinkedListJS = `
  *     this.next = (next===undefined ? null : next)
  * }
  */
+// Do not edit function name
 function reverseLinkedList(head) {
   // Write your code here
 };`;
 
-export const reverseLinkedList = {
+const reverseLinkedList = {
   id: "reverse-linked-list",
   title: "2. Reverse Linked List",
   problemStatement: `<p class='mt-3'>Given the <code>head</code> of a singly linked list, reverse the list, and return <em>the reversed list</em>.</p>
@@ -127,5 +114,4 @@ export const reverseLinkedList = {
   starterFunctionName: "function reverseLinkedList(",
   order: 2,
 };
-
 export default reverseLinkedList;

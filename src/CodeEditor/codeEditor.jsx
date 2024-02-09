@@ -10,7 +10,7 @@ import { auth } from "../firebase";
 function CodeEditor({ Problem }) {
   const [user] = useAuthState(auth);
   const [caseNumber, setCaseNumber] = useState(1);
-  const [inputCode, setInputCode] = useState(Problem.starterCode);
+  const inputCode = useRef(Problem.starterCode);
   function handleOnChange(newValue) {
     localStorage.setItem(Problem.id, newValue);
   }
@@ -20,7 +20,9 @@ function CodeEditor({ Problem }) {
       return;
     }
     try {
-      const result = Problem.handlerFunction(inputCode);
+      const cb = new Function(`return ${localStorage.getItem(Problem.id)}`)();
+      const result = Problem.handlerFunction(cb);
+      // const result = Problem.handlerFunction(cb);
       if (result) {
         alert("Congratulations! All tests passed");
       } else {
@@ -32,7 +34,7 @@ function CodeEditor({ Problem }) {
   };
   return (
     <div className="min-w-0 mb-2 bg-white m-2 ml-0.5 rounded-md">
-      <PreferanceNav Problem={Problem} setInputCode={setInputCode} />
+      <PreferanceNav Problem={Problem} />
       <Split
         className="splitver h-[calc(100vh-160px)]"
         direction="vertical"
