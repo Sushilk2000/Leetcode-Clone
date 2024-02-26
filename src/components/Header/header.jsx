@@ -37,8 +37,8 @@ function Header({ problempage }) {
   };
   return (
     <div className="h-[3rem] shadow-md flex justify-center">
-      <div className="w-[1200px] px-4 border flex items-center justify-between">
-        <div className="text-left border">
+      <div className="w-[1200px] px-4  flex items-center justify-between">
+        <div className="text-left ">
           <Link to="/">
             <div className="h-full">
               <img
